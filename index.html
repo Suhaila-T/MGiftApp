@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Malay Learning Gift 🇲🇾</title>
+
+  <!-- PWA & Mobile -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1565c0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="Malay-Apps Icon.svg">
+  <link rel="icon" type="image/svg+xml" href="Malay-Apps Icon.svg">
+
+  <!-- Fonts & Styles -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ===== GREETING PAGE ===== -->
+  <div id="greeting" class="page container min-vh-100 d-flex align-items-center justify-content-center romantic-theme">
+    <div class="glass-welcome romantic-card text-center animate-fade-up">
+      <!-- Decoration Elements -->
+      <div class="decoration-heart heart-1"><i class="fas fa-heart"></i></div>
+      <div class="decoration-heart heart-2"><i class="fas fa-heart"></i></div>
+      <div class="decoration-heart heart-3"><i class="fas fa-heart"></i></div>
+
+      <div class="love-badge mb-3">Made with ❤️ for You</div>
+
+      <h1 class="display-3 fw-bold mb-2 animate-fade-up text-romantic-gradient" style="font-size: 3.2rem;">
+        Selamat Datang,<br><span class="name-highlight">Abdiwahab Adam</span>
+      </h1>
+
+      <h3 class="romantic-subtitle mb-4 animate-fade-up delay-1">
+        "A special gift for you to learn Malay,<br>because I believe in you".
+      </h3>
+
+      <div class="d-grid gap-3 col-lg-8 mx-auto animate-fade-up delay-2">
+        <button class="btn btn-romantic-start btn-lg rounded-pill shadow-lg" onclick="enterApp()">
+          Start Our Journey
+        </button>
+        <button class="btn btn-link text-decoration-none text-muted btn-sm" onclick="confirmResetProgress()">
+          <small>Restart Progress</small>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Image and text -->
+  <nav class="navbar navbar-light custom-navbar d-none">
+    <a class="navbar-brand" href="#">
+      <img src="Malay-Apps Icon.svg" class="app-icon d-inline-block" alt="">
+      Malay Learning App
+    </a>
+  </nav>
+
+  <!-- ===== HOME PAGE ===== -->
+  <div id="home" class="page d-none">
+    <main class="container py-4">
+      <div class="home-hero-modern text-center animate-fade-up">
+        <h2 class="fw-bold text-primary mb-2">Selamat Datang 👋</h2>
+        <p class="text-muted">What would you like to learn today?</p>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="dashboard-item" onclick="showPage('lessons')">
+          <div class="dashboard-icon"><i class="fas fa-book"></i></div>
+          <span class="dashboard-label">Lessons</span>
+        </div>
+
+        <div class="dashboard-item" onclick="showPage('numbers')">
+          <div class="dashboard-icon"><i class="fas fa-list-ol"></i></div>
+          <span class="dashboard-label">Numbers</span>
+        </div>
+
+        <div class="dashboard-item" onclick="showPage('vocab')">
+          <div class="dashboard-icon"><i class="fas fa-spell-check"></i></div>
+          <span class="dashboard-label">Vocab</span>
+        </div>
+
+        <div class="dashboard-item" onclick="showPage('idioms')">
+          <div class="dashboard-icon"><i class="fas fa-quote-left"></i></div>
+          <span class="dashboard-label">Idioms</span>
+        </div>
+
+        <div class="dashboard-item" onclick="showPage('stories')">
+          <div class="dashboard-icon"><i class="fas fa-book-open"></i></div>
+          <span class="dashboard-label">Stories</span>
+        </div>
+
+        <div class="dashboard-item" onclick="showPage('flashcards')">
+          <div class="dashboard-icon"><i class="fas fa-clone"></i></div>
+          <span class="dashboard-label">Flashcards</span>
+        </div>
+
+        <div class="dashboard-item" onclick="showPage('quiz')">
+          <div class="dashboard-icon"><i class="fas fa-graduation-cap"></i></div>
+          <span class="dashboard-label">Quiz</span>
+        </div>
+
+        <div class="dashboard-item" onclick="showPage('idiomsQuiz')">
+          <div class="dashboard-icon"><i class="fas fa-lightbulb"></i></div>
+          <span class="dashboard-label">Idioms Quiz</span>
+        </div>
+
+        <div class="dashboard-item" onclick="showPage('sentenceGame')">
+          <div class="dashboard-icon"><i class="fas fa-tasks"></i></div>
+          <span class="dashboard-label">Arrange Game</span>
+        </div>
+
+        <div class="dashboard-item" onclick="showPage('game')">
+          <div class="dashboard-icon"><i class="fa-solid fa-puzzle-piece"></i></div>
+          <span class="dashboard-label">Scramble</span>
+        </div>
+      </div>
+    </main>
+  </div>
+
+
+  </div>
+  </main>
+  </div>
+
+  <!-- ===== LESSONS PAGE ===== -->
+  <div id="lessons" class="page d-none">
+    <main class="container py-4">
+      <h2 class="page-title">Malay Grammar Lessons</h2>
+      <p class="page-subtitle">Master the basics step by step</p>
+
+      <div id="lessonsList" class="row g-3"></div>
+    </main>
+  </div>
+
+  <!-- ===== LESSON VIEWER MODAL ===== -->
+  <div id="lessonModal" class="lesson-modal d-none">
+    <div class="lesson-modal-content animate-pop">
+      <span class="close-modal" onclick="closeLessonModal()">×</span>
+      <div id="lessonModalBody" class="lesson-viewer-body">
+        <h3 id="modalLessonTitle" class="text-primary fw-bold mb-4"></h3>
+        <div id="modalLessonContent" class="lesson-text-content"></div>
+      </div>
+      <div class="lesson-modal-nav d-flex justify-content-between align-items-center mt-4">
+        <button class="btn btn-outline-primary rounded-pill px-4" onclick="prevLesson()">← Prev</button>
+        <span id="lessonCounter" class="badge bg-light text-dark fs-6 p-2 px-3">1/15</span>
+        <button class="btn btn-primary rounded-pill px-4" onclick="nextLesson()">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== NUMBERS PAGE ===== -->
+  <div id="numbers" class="page d-none">
+    <main class="container py-4">
+      <h2 class="page-title">Numbers (Nombor)</h2>
+      <p class="page-subtitle">Click to listen!</p>
+
+      <div id="numbersList" class="row g-3 justify-content-center"></div>
+    </main>
+  </div>
+
+  <!-- ===== VOCAB PAGE ===== -->
+  <div id="vocab" class="page d-none">
+    <main class="container py-4">
+      <h2 class="page-title">Daily Use Malay Vocabulary</h2>
+      <p class="page-subtitle">Build your daily Malay words step by step</p>
+
+      <!-- Search Bar -->
+      <div class="mb-4" style="max-width: 600px; margin: 0 auto;">
+        <input type="text" id="inputVocabSearch" class="form-control rounded-pill p-3 shadow-sm"
+          placeholder="🔍 Search vocabulary..." onkeyup="renderVocabulary()">
+      </div>
+
+      <!-- Initial Category Grid View -->
+      <div id="vocabCategoryGrid" class="dashboard-grid mb-5">
+        <!-- Grammar/Basic -->
+        <div class="dashboard-item vocab-tab" data-type="Common" onclick="setVocabFilter('Common')">
+          <div class="dashboard-icon bg-primary text-white"><i class="fas fa-star"></i></div>
+          <span class="dashboard-label">Common</span>
+        </div>
+        <div class="dashboard-item vocab-tab" data-type="Verbs" onclick="setVocabFilter('Verbs')">
+          <div class="dashboard-icon bg-info text-white"><i class="fas fa-walking"></i></div>
+          <span class="dashboard-label">Verbs</span>
+        </div>
+        <div class="dashboard-item vocab-tab" data-type="Adjectives" onclick="setVocabFilter('Adjectives')">
+          <div class="dashboard-icon bg-warning text-white"><i class="fas fa-magic"></i></div>
+          <span class="dashboard-label">Adjectives</span>
+        </div>
+
+        <!-- Thematic Categories -->
+        <div class="dashboard-item vocab-tab" data-type="Romance" onclick="setVocabFilter('Romance')">
+          <div class="dashboard-icon bg-danger text-white"><i class="fas fa-heart"></i></div>
+          <span class="dashboard-label">Romance</span>
+        </div>
+        <div class="dashboard-item vocab-tab" data-type="Animals" onclick="setVocabFilter('Animals')">
+          <div class="dashboard-icon bg-success text-white"><i class="fas fa-paw"></i></div>
+          <span class="dashboard-label">Animals</span>
+        </div>
+        <div class="dashboard-item vocab-tab" data-type="Colors" onclick="setVocabFilter('Colors')">
+          <div class="dashboard-icon bg-secondary text-white"><i class="fas fa-palette"></i></div>
+          <span class="dashboard-label">Colors</span>
+        </div>
+        <div class="dashboard-item vocab-tab" data-type="Family" onclick="setVocabFilter('Family')">
+          <div class="dashboard-icon bg-primary text-white"><i class="fas fa-users"></i></div>
+          <span class="dashboard-label">Family</span>
+        </div>
+        <div class="dashboard-item vocab-tab" data-type="Travel" onclick="setVocabFilter('Travel')">
+          <div class="dashboard-icon bg-info text-white"><i class="fas fa-plane"></i></div>
+          <span class="dashboard-label">Travel</span>
+        </div>
+        <div class="dashboard-item vocab-tab" data-type="House" onclick="setVocabFilter('House')">
+          <div class="dashboard-icon bg-success text-white"><i class="fas fa-home"></i></div>
+          <span class="dashboard-label">House</span>
+        </div>
+        <div class="dashboard-item vocab-tab" data-type="Occasions" onclick="setVocabFilter('Occasions')">
+          <div class="dashboard-icon bg-warning text-white"><i class="fas fa-gift"></i></div>
+          <span class="dashboard-label">Occasions</span>
+        </div>
+        <div class="dashboard-item vocab-tab" data-type="Things" onclick="setVocabFilter('Things')">
+          <div class="dashboard-icon bg-dark text-white"><i class="fas fa-box"></i></div>
+          <span class="dashboard-label">Things</span>
+        </div>
+      </div>
+
+      <!-- Detail Word List View (Initially Hidden) -->
+      <div id="vocabContainer" class="d-none">
+        <div class="d-flex align-items-center mb-4 gap-3">
+          <button class="btn btn-light rounded-circle shadow-sm" style="width: 45px; height: 45px;"
+            onclick="setVocabFilter('AllView')">
+            <i class="fas fa-arrow-left"></i>
+          </button>
+          <h3 id="vocabCategoryTitle" class="fw-bold mb-0">Category Name</h3>
+        </div>
+        <div id="vocabList"></div>
+      </div>
+
+
+    </main>
+  </div>
+
+  <!-- ===== IDIOMS PAGE ===== -->
+  <div id="idioms" class="page d-none">
+    <main class="container py-4">
+      <h2 class="page-title">Malay Idioms</h2>
+      <p class="page-subtitle">The phrases that utters wisdom</p>
+
+      <!-- Search Bar -->
+      <div class="mb-4" style="max-width: 600px; margin: 0 auto;">
+        <input type="text" id="inputIdiomSearch" class="form-control rounded-pill p-3 shadow-sm"
+          placeholder="🔍 Search idioms..." onkeyup="renderIdioms()">
+      </div>
+
+      <div id="idiomsList"></div>
+
+
+    </main>
+  </div>
+
+  <!-- ===== STORIES PAGE ===== -->
+  <div id="stories" class="page d-none">
+    <main class="container py-4">
+      <!-- Level Selector -->
+      <div class="d-flex justify-content-center mb-4">
+        <div class="level-tabs-modern">
+          <button class="btn active" id="btnBeginner" onclick="setStoryLevel('Beginner')">🌱 Beginner</button>
+          <button class="btn" id="btnIntermediate" onclick="setStoryLevel('Intermediate')">🌿 Intermediate</button>
+          <button class="btn" id="btnAdvance" onclick="setStoryLevel('Advance')">🌳 Advance</button>
+        </div>
+      </div>
+
+      <!-- Story List (Dynamic titles moved here in JS) -->
+      <div id="storyList"></div>
+
+      <!-- Story Reader -->
+      <div id="storyReader" class="d-none mt-1">
+        <h3 id="storyTitle" class="text-center fw-bold text-primary mb-1"></h3>
+        <p class="text-center badge bg-light text-dark d-block mx-auto mb-4" id="storyLevel"
+          style="width: fit-content;"></p>
+
+        <!-- Image Illustration -->
+        <div id="storyImageContainer" class="d-none text-center"></div>
+
+        <pre id="storyMalay" class="story-text"></pre>
+
+        <pre id="storyEnglish" class="story-text d-none"></pre>
+
+        <div class="d-flex flex-wrap gap-2 mt-3">
+          <button class="btn btn-sm btn-primary" onclick="toggleTranslation()">
+            Show/Hide English
+          </button>
+
+          <button class="btn btn-sm btn-success" onclick="speakMalay(document.getElementById('storyMalay').innerText)">
+            🔊 Listen
+          </button>
+
+          <button class="btn btn-sm btn-danger" onclick="stopSpeech()">
+            ⏹ Stop
+          </button>
+
+          <button id="btnMarkAsRead" class="btn btn-sm btn-light" onclick="finishStory()">
+            Mark as Read
+          </button>
+        </div>
+
+        <div class="mt-3 border-top pt-3">
+
+          <!-- Prev + Next (same row) -->
+          <div class="d-flex justify-content-between mb-3 story-nav">
+            <button id="btnPrevStory" class="btn btn-sm btn-story-nav" onclick="prevStory()">
+              ← Prev
+            </button>
+
+            <button id="btnNextStory" class="btn btn-sm btn-story-nav btn-next" onclick="nextStory()">
+              Next →
+            </button>
+          </div>
+
+          <!-- Back to Stories (bottom) -->
+          <div class="d-flex justify-content-center-start back-btn-wrapper text-start mt-5 mb-4">
+            <button class="btn btn-sm btn-outline-secondary" onclick="backToStories()">
+              ← Back
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ===== FLASHCARDS PAGE ===== -->
+  <div id="flashcards" class="page d-none">
+    <main class="container py-4 text-center">
+      <h2 class="page-title mb-5">Flashcards</h2>
+      <p class="page-subtitle">Tap the card to flip!</p>
+
+      <div class="flashcard-container" onclick="flipCard()">
+        <div id="flashcardInner" class="flashcard-inner">
+          <!-- Front -->
+          <div class="flashcard-front">
+            <div class="flashcard-text" id="flashcardFrontText">Selamat Pagi</div>
+            <div class="flashcard-sub">Malay</div>
+          </div>
+          <!-- Back -->
+          <div class="flashcard-back">
+            <div class="flashcard-text" id="flashcardBackText">Good Morning</div>
+            <div class="flashcard-sub">English</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard-controls-modern">
+        <button class="btn-nav-round" onclick="prevCard()">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <button class="btn-action-pill shadow" onclick="flipCard()">
+          FLIP CARD ↺
+        </button>
+
+        <button class="btn-nav-round" onclick="nextCard()">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+
+
+    </main>
+  </div>
+
+  <!-- ===== QUIZ PAGE ===== -->
+  <div id="quiz" class="page d-none">
+    <main class="container py-4">
+      <h2 class="page-title">Bahasa Quiz</h2>
+      <p class="page-subtitle">Test your knowledge!</p>
+
+      <!-- Quiz Level Selector -->
+      <div class="d-flex justify-content-center mb-4" id="quizLevelParams">
+        <div class="level-tabs-modern">
+          <button class="btn active" id="btnQuizBeginner" onclick="startQuizLevel('Beginner')">🌱 Beginner</button>
+          <button class="btn" id="btnQuizIntermediate" onclick="startQuizLevel('Intermediate')">🌿 Intermediate</button>
+          <button class="btn" id="btnQuizAdvance" onclick="startQuizLevel('Advance')">🌳 Advance</button>
+        </div>
+      </div>
+
+      <!-- Quiz Container -->
+      <div id="quizContainer" class="quiz-card-modern animate-fade-up mx-auto" style="max-width: 600px;">
+        <div id="quizStartView" class="text-center py-4">
+          <div class="avatar-circle mx-auto mb-3 bg-primary text-white"
+            style="width: 80px; height: 80px; font-size: 2rem;">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <h3 class="fw-bold">Ready for a challenge?</h3>
+          <p class="text-muted">Select a difficulty level above to begin your assessment.</p>
+        </div>
+
+        <div id="quizQuestionView" class="d-none">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <span class="badge rounded-pill bg-light text-primary px-3 py-2 border" id="quizProgress">Q 1/5</span>
+            <span class="badge rounded-pill bg-primary px-3 py-2" id="quizScoreDisplay">Score: 0</span>
+          </div>
+          <div id="quizTypeLabel" class="text-center mb-2"></div>
+          <h4 id="questionText" class="mb-4 text-center fw-bold text-dark" style="line-height: 1.5;">...</h4>
+          <div id="answerOptions" class="d-grid gap-3">
+            <!-- Buttons will go here -->
+          </div>
+        </div>
+
+        <div id="quizResultView" class="d-none text-center py-4">
+          <div class="medal-pop" style="font-size: 5rem;">🎉</div>
+          <h3 class="fw-bold mt-3">Level Complete!</h3>
+          <p class="fs-4">You scored <span id="finalScore" class="fw-bold text-primary"></span></p>
+          <div id="quizFeedback" class="mb-4 text-muted"></div>
+          <div class="d-grid gap-2">
+            <button class="btn btn-primary btn-android btn-lg" onclick="showPage('quiz')">Restart Quiz</button>
+            <button class="btn btn-outline-secondary rounded-pill" onclick="showPage('home')">Back to Home</button>
+          </div>
+        </div>
+      </div>
+
+
+    </main>
+  </div>
+
+  <!-- ===== IDIOMS QUIZ PAGE ===== -->
+  <div id="idiomsQuiz" class="page d-none">
+    <main class="container py-4">
+      <h2 class="page-title">Idioms Quiz</h2>
+      <p class="page-subtitle">Learn the hidden meanings!</p>
+
+      <div id="idiomsQuizContainer" class="quiz-card-modern animate-fade-up mx-auto" style="max-width: 600px;">
+        <div id="idiomsQuizStartView" class="text-center py-4">
+          <div class="avatar-circle mx-auto mb-3 bg-info text-white"
+            style="width: 80px; height: 80px; font-size: 2rem;">
+            <i class="fas fa-lightbulb"></i>
+          </div>
+          <h3 class="fw-bold">Explore Malay Wisdom</h3>
+          <p class="text-muted">Test your knowledge of Malay idioms. This quiz has no score—it's just for fun and
+            learning!</p>
+          <button class="btn btn-info text-white btn-android btn-lg" onclick="startIdiomsQuiz()">Start
+            Exploring</button>
+        </div>
+
+        <div id="idiomsQuizQuestionView" class="d-none">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <span class="badge rounded-pill bg-light text-info px-3 py-2 border" id="idiomQuizProgress">Question
+              1</span>
+          </div>
+          <div class="text-center mb-4">
+            <h5 class="text-muted mb-1">What does this idiom mean?</h5>
+            <h3 id="idiomQuestionText" class="fw-bold text-primary" style="line-height: 1.4;">...</h3>
+          </div>
+          <div id="idiomAnswerOptions" class="d-grid gap-3">
+            <!-- Buttons will go here -->
+          </div>
+          <div id="idiomExplanation" class="mt-4 p-3 bg-light rounded-3 d-none animate-fade-up">
+            <strong class="text-info">Translation:</strong> <span id="idiomTranslation"
+              class="fst-italic text-muted"></span>
+          </div>
+        </div>
+
+        <div id="idiomsQuizResultView" class="d-none text-center py-4">
+          <div class="medal-pop" style="font-size: 5rem;">📖</div>
+          <h3 class="fw-bold mt-3">Great Job!</h3>
+          <p class="text-muted">You've reached the end of this set. Idioms help you understand the culture deeper!</p>
+          <div class="d-grid gap-2">
+            <button class="btn btn-info text-white btn-android btn-lg" onclick="startIdiomsQuiz()">More Idioms</button>
+            <button class="btn btn-outline-secondary rounded-pill" onclick="showPage('home')">Back to Home</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ===== SENTENCE GAME PAGE ===== -->
+  <div id="sentenceGame" class="page d-none">
+    <main class="container py-4">
+      <h2 class="page-title text-center">Arrange the Sentence</h2>
+      <p class="page-subtitle text-center">Put the words in the correct order!</p>
+
+      <div class="game-container-modern mx-auto" style="max-width: 600px;">
+        <!-- Start Selection View -->
+        <div id="sentenceStartView" class="text-center py-4">
+          <div class="medal-pop mb-3" style="font-size: 4rem;">🧩</div>
+          <h3 class="fw-bold">Pick Your Level</h3>
+          <p class="text-muted">Start with simple sentences or challenge yourself with longer ones!</p>
+
+          <div class="d-grid gap-3 mt-4">
+            <button class="btn btn-outline-success btn-lg rounded-pill fw-bold" onclick="startSentenceGame('Easy')">
+              Easy (2-3 words)
+            </button>
+            <button class="btn btn-outline-primary btn-lg rounded-pill fw-bold" onclick="startSentenceGame('Medium')">
+              Medium (4-5 words)
+            </button>
+            <button class="btn btn-outline-warning btn-lg rounded-pill fw-bold" onclick="startSentenceGame('Hard')">
+              Hard (6+ words)
+            </button>
+          </div>
+        </div>
+
+        <!-- Main Game View (Initially Hidden) -->
+        <div id="sentenceMainGame" class="d-none">
+          <!-- Level Tracker -->
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <span class="badge rounded-pill bg-light text-primary px-3 py-2 border" id="sentenceGameProgress">Task
+              1/5</span>
+            <span class="badge rounded-pill bg-success px-3 py-2" id="sentenceGameScore">Correct: 0</span>
+          </div>
+
+          <!-- English Translation Card -->
+          <div class="sentence-card-modern mb-4 animate-fade-up">
+            <h5 class="text-muted small mb-2 text-uppercase">English Translation:</h5>
+            <h3 id="sentenceTargetEnglish" class="fw-bold text-dark">...</h3>
+          </div>
+
+          <!-- Drop Zone (Arranged Words) -->
+          <div id="sentenceDropZone" class="sentence-drop-zone mb-4 animate-fade-up">
+            <p class="drop-hint text-muted">Tap words from below to arrange them here</p>
+          </div>
+
+          <!-- Word Pool -->
+          <div id="sentenceWordPool" class="sentence-word-pool mb-4">
+            <!-- Words will be injected here -->
+          </div>
+
+          <!-- Controls -->
+          <div class="d-flex gap-2 justify-content-center" id="sentenceControls">
+            <button class="btn btn-outline-secondary rounded-pill px-4" onclick="resetCurrentSentence()">
+              <i class="fas fa-undo me-1"></i> Reset
+            </button>
+            <button id="btnCheckSentence" class="btn btn-primary rounded-pill px-5 shadow-sm"
+              onclick="checkSentenceOrder()">
+              Check Order
+            </button>
+          </div>
+        </div> <!-- Close sentenceMainGame -->
+
+        <!-- Result View (Initially Hidden) -->
+        <div id="sentenceGameResult" class="d-none text-center py-4">
+          <div class="medal-pop" style="font-size: 5rem;">🏆</div>
+          <h3 class="fw-bold mt-3">Level Complete!</h3>
+          <p class="text-muted" id="sentenceResultText"></p>
+          <div class="d-grid gap-2">
+            <button class="btn btn-primary btn-android btn-lg" onclick="startSentenceGame()">Play Again</button>
+            <button class="btn btn-outline-secondary rounded-pill" onclick="showPage('home')">Back to Home</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ===== DAILY TALK PAGE ===== -->
+  <div id="dailyTalk" class="page d-none">
+    <main class="container py-4">
+      <h2 class="page-title">Daily Talk</h2>
+      <p class="page-subtitle">Practice your dialogue skills!</p>
+
+      <div class="chat-container-wrapper mx-auto" style="max-width: 600px;">
+        <div class="card p-0 overflow-hidden shadow-lg border-0"
+          style="height: 500px; display: flex; flex-direction: column; background: rgba(255, 255, 255, 0.9) !important;">
+          <!-- Chat Header -->
+          <div class="chat-header p-3 d-flex align-items-center bg-primary text-white justify-content-between">
+            <div class="d-flex align-items-center">
+              <div class="avatar-circle me-3">
+                <i class="fas fa-robot"></i>
+              </div>
+              <div>
+                <h5 class="mb-0 fw-bold">Amir</h5>
+                <small class="text-white-50">Online</small>
+              </div>
+            </div>
+            <button id="voiceToggle" class="btn btn-sm btn-light rounded-circle shadow-sm" onclick="toggleVoice()"
+              title="Toggle Voice">
+              <i class="fas fa-volume-up"></i>
+            </button>
+          </div>
+
+          <!-- Chat Messages -->
+          <div id="chatMessages" class="chat-messages p-3 flex-grow-1 overflow-auto d-flex flex-column gap-3">
+            <!-- Messages will be injected here -->
+          </div>
+
+          <!-- Chat Options -->
+          <div id="chatOptions" class="chat-options p-3 border-top bg-light d-grid gap-2">
+            <!-- Option buttons will be injected here -->
+          </div>
+        </div>
+
+        <div class="text-center mt-3">
+          <button class="btn btn-outline-secondary btn-sm rounded-pill" onclick="resetDialogue()">
+            <i class="fas fa-undo me-1"></i> Restart Dialogue
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+  <div id="favorites" class="page d-none">
+    <main class="container py-4">
+      <h2 class="page-title">Favorite Words</h2>
+      <p class="page-subtitle">Your saved words in one place</p>
+
+      <div id="favoritesList" class="favorites-container"></div>
+
+      <p id="noFavorites" class="text-center text-muted d-none">
+        No favorite words yet.
+      </p>
+
+
+    </main>
+  </div>
+
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- ===== VOCAB POPUP ===== -->
+  <div id="vocabPopup" class="vocab-popup d-none">
+    <h5 id="popupMalay"></h5>
+    <hr>
+    <p><strong>English:</strong> <span id="popupEnglish"></span></p>
+    <p><strong>Example:</strong> <span id="popupExample"></span></p>
+    <span class="popup-close" onclick="closePopup()">✕</span>
+
+    <button class="btn btn-sm btn-success" onclick="speakMalay(document.getElementById('popupMalay').innerText)">
+      🔊 Listen
+    </button>
+
+    <button class="btn btn-sm btn-danger me-2" onclick="toggleFavorite()">❤️ Save
+    </button>
+  </div>
+
+  <!-- ===== CELEBRATION OVERLAY ===== -->
+  <div id="celebrationOverlay" class="celebration-overlay d-none">
+    <div class="celebration-content text-center">
+      <div class="confetti-container"></div>
+      <div class="medal-pop">🥇</div>
+      <h2 class="text-white fw-bold display-4 mt-3">Level Complete!</h2>
+      <p class="text-white fs-4" id="celebrationMessage">You mastered the Beginner Level!</p>
+      <button class="btn btn-light btn-lg mt-4 fw-bold text-primary" onclick="closeCelebration()">Let's Keep
+        Going!</button>
+    </div>
+  </div>
+
+  <!-- ===== PROGRESS PAGE ===== -->
+  <div id="progress" class="page d-none">
+    <main class="container py-4">
+      <h2 class="page-title">My Journey</h2>
+      <p class="page-subtitle">Track your progress here</p>
+
+      <div id="grandPrizeContainer" class="text-center d-none mb-5 animate-pop">
+        <div class="grand-trophy">🏆</div>
+        <h2 class="fw-bold">CONGRATULATIONS!</h2>
+        <p class="lead">You have mastered all levels! I am so proud of you, my love ❤️.</p>
+      </div>
+
+      <!-- Dashboard Stats -->
+      <div class="mastery-container-modern text-center animate-fade-up">
+        <h3 class="fw-bold mb-4">Course Mastery</h3>
+        <div id="totalProgressCircle" class="progress-circle-modern">
+          <span class="progress-number-modern" id="totalProgressText">0%</span>
+        </div>
+        <p class="mt-4 opacity-75 fs-5">Overall Learning Journey</p>
+      </div>
+
+      <h4 class="text-center fw-bold mb-4 text-dark-blue">Unlock Achievements</h4>
+
+      <div class="row g-4 justify-content-center">
+        <!-- Beginner -->
+        <div class="col-12 col-md-4">
+          <div class="progress-card-modern beginner-card text-center" onclick="selectLevel('Beginner')">
+            <div class="medal-slot-modern mx-auto" id="medalBeginner">🔒</div>
+            <h5 class="fw-bold mb-3">Beginner</h5>
+            <div class="progress mb-3" style="height: 14px; border-radius: 20px; background: #f0f0f0;">
+              <div id="progBarBeginner" class="progress-bar bg-success" role="progressbar"
+                style="width: 0%; border-radius: 20px;">0%</div>
+            </div>
+            <div class="d-flex justify-content-between small px-2">
+              <span class="text-muted">Stories: <strong id="progTextBeginnerStories"
+                  class="text-dark">0/0</strong></span>
+              <span class="text-muted">Quiz: <strong id="progTextBeginnerQuiz" class="text-dark">Locked</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Intermediate -->
+        <div class="col-12 col-md-4">
+          <div class="progress-card-modern intermediate-card text-center" onclick="selectLevel('Intermediate')">
+            <div class="medal-slot-modern mx-auto" id="medalIntermediate">🔒</div>
+            <h5 class="fw-bold mb-3">Intermediate</h5>
+            <div class="progress mb-3" style="height: 14px; border-radius: 20px; background: #f0f0f0;">
+              <div id="progBarIntermediate" class="progress-bar bg-info" role="progressbar"
+                style="width: 0%; border-radius: 20px;">0%</div>
+            </div>
+            <div class="d-flex justify-content-between small px-2">
+              <span class="text-muted">Stories: <strong id="progTextIntermediateStories"
+                  class="text-dark">0/0</strong></span>
+              <span class="text-muted">Quiz: <strong id="progTextIntermediateQuiz"
+                  class="text-dark">Locked</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Advance -->
+        <div class="col-12 col-md-4">
+          <div class="progress-card-modern advance-card text-center" onclick="selectLevel('Advance')">
+            <div class="medal-slot-modern mx-auto" id="medalAdvance">🔒</div>
+            <h5 class="fw-bold mb-3">Advance</h5>
+            <div class="progress mb-3" style="height: 14px; border-radius: 20px; background: #f0f0f0;">
+              <div id="progBarAdvance" class="progress-bar bg-warning" role="progressbar"
+                style="width: 0%; border-radius: 20px;">0%</div>
+            </div>
+            <div class="d-flex justify-content-between small px-2">
+              <span class="text-muted">Stories: <strong id="progTextAdvanceStories"
+                  class="text-dark">0/0</strong></span>
+              <span class="text-muted">Quiz: <strong id="progTextAdvanceQuiz" class="text-dark">Locked</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </main>
+  </div>
+
+  <!--NAV BAR / FOOTER-->
+  <!-- ===== FOOTER NAVBAR ===== -->
+  <!-- ===== FOOTER NAVIGATION ===== -->
+  <!-- ===== MAIL PAGE ===== -->
+  <div id="mail" class="page d-none">
+    <main class="container py-4 text-center">
+      <h2 class="page-title">Love Letters 💌</h2>
+      <p class="page-subtitle">Spin the wheel for a message!</p>
+
+      <div class="wheel-container">
+        <div class="wheel-pointer">🔻</div>
+        <div id="spinWheel" class="wheel">
+          <!-- Wheel sections will be generated by JS -->
+        </div>
+      </div>
+
+      <button id="spinBtn" class="btn btn-primary btn-lg rounded-pill mt-4 px-5 shadow-lg" onclick="spinWheel()">
+        Spin Now! 🎲
+      </button>
+
+
+    </main>
+  </div>
+
+  <!-- ===== GAME PAGE ===== -->
+  <div id="game" class="page d-none">
+    <main class="container py-4 text-center">
+      <h2 class="page-title">Word Scramble 🧩</h2>
+      <p class="page-subtitle mb-4">Unscramble the Malay word!</p>
+
+      <div class="game-card-modern animate-fade-up">
+        <div id="gameContent">
+          <div class="scramble-word-modern" id="scrambleWord">...</div>
+
+          <p id="scrambleHint" class="text-muted mb-4 fs-5"><i class="fas fa-lightbulb text-warning me-2"></i>Hint: ...
+          </p>
+
+          <input type="text" id="gameInput" class="form-control game-input-modern mb-4"
+            placeholder="Type answer here..." autocomplete="off">
+
+          <div class="d-grid gap-3">
+            <button class="btn btn-primary btn-game-modern shadow" onclick="checkGameAnswer()">Check Answer</button>
+            <button class="btn btn-outline-secondary btn-game-modern" onclick="nextGameWord()">Skip Word</button>
+          </div>
+
+          <div id="gameMessage" class="mt-4 fw-bold fs-5"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Tab Bar -->
+  <nav class="tab-bar">
+    <ul>
+      <li data-tab="home" onclick="showPage('home')"><i class="fa-solid fa-house"></i> Home</li>
+      <li data-tab="favorites" onclick="showPage('favorites')"><i class="fa-solid fa-heart"></i> Favorite</li>
+      <li data-tab="progress" onclick="showPage('progress')"><i class="fa-solid fa-chart-line"></i> Progress</li>
+      <li data-tab="mail" onclick="showPage('mail')"><i class="fa-solid fa-envelope"></i> Mail</li>
+      <li data-tab="dailyTalk" onclick="showPage('dailyTalk')"><i class="fa-solid fa-comments"></i> Talk</li>
+    </ul>
+  </nav>
+
+  <!-- Letter Popup -->
+  <div id="letterPopup" class="letter-popup d-none animate-pop">
+    <div class="popup-content">
+      <span class="close-popup" onclick="closeLetterPopup()">×</span>
+      <h3 class="mb-3">💌 A Message For You</h3>
+      <div id="letterText" class="letter-text"></div>
+      <button class="btn btn-primary mt-3 rounded-pill" onclick="closeLetterPopup()">Thank you ❤️</button>
+    </div>
+  </div>
+
+  <!-- ===== TUTORIAL POPUP ===== -->
+  <div id="tutorialOverlay" class="tutorial-overlay d-none">
+    <div class="tutorial-card animate-pop">
+      <div id="tutorialIcon" class="tutorial-image">👋</div>
+      <h2 id="tutorialTitle" class="tutorial-title">Welcome!</h2>
+      <p id="tutorialText" class="tutorial-text">
+        Let's take a quick tour to help you get the most out of your Malay learning journey.
+      </p>
+
+      <div class="tutorial-dots" id="tutorialDots">
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+
+      <div class="tutorial-nav">
+        <button class="btn skip-btn rounded-pill" onclick="closeTutorial()">Skip</button>
+        <button id="tutorialNextBtn" class="btn btn-primary rounded-pill px-4"
+          onclick="nextTutorialStep()">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Your JS -->
+  <script src="script.js"></script>
+
+</body>
+
+</html>
